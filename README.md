@@ -38,9 +38,11 @@ Create `src/feedkit/sources/<name>.py` with `NAME`, `REQUIRED_FIELDS` and `fetch
 ```bash
 uv sync
 docker compose up -d db
-export DATABASE_URL=postgresql://feedkit:feedkit@localhost:5433/feedkit
+export DATABASE_URL=postgresql://feedkit:feedkit@localhost:5433/feedkit_test
 uv run pytest -v
 ```
+
+Tests truncate tables, so they run against `feedkit_test`, a separate database from `feedkit`, to avoid wiping real data.
 
 ## Compliance
 
