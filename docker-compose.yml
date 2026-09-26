@@ -1,3 +1,11 @@
+x-app: &app
+  build: .
+  environment:
+    DATABASE_URL: postgresql://feedkit:${POSTGRES_PASSWORD:-feedkit}@db:5432/feedkit
+  depends_on:
+    db:
+      condition: service_healthy
+
 services:
   db:
     image: postgres:16
@@ -13,6 +21,19 @@ services:
       test: ["CMD-SHELL", "pg_isready -U feedkit"]
       interval: 5s
       retries: 10
+
+  app:
+    <<: *app
+    command: ["feedkit", "init-db"]
+
+  scheduler:
+    <<: *app
+    command: ["supercronic", "/app/crontab"]
+    depends_on:
+      db:
+        condition: service_healthy
+      app:
+        condition: service_completed_successfully
 
 volumes:
   pgdata: {}

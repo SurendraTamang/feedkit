@@ -1,0 +1,3 @@
+# books: daily at 02:15 UTC. hackernews: hourly at :05.
+15 2 * * * feedkit run --source books
+5 * * * * feedkit run --source hackernews
