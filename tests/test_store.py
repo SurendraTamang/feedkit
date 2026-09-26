@@ -1,8 +1,10 @@
 import os
+from datetime import date
 
 import pytest
 
 from feedkit import store
+from feedkit.runner import run_source
 
 needs_db = pytest.mark.skipif("DATABASE_URL" not in os.environ, reason="needs Postgres")
 
@@ -31,10 +33,6 @@ def test_init_db_is_idempotent(conn):
     )}
     assert {"runs", "records", "record_versions"} <= tables
 
-
-from datetime import date
-
-from feedkit.runner import run_source
 
 D = date(2026, 9, 30)
 BOOKS = [
