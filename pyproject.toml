@@ -1,0 +1,20 @@
+[project]
+name = "feedkit"
+version = "0.1.0"
+description = "Turn any scraper into a monitored data feed: dedup, SCD2 history, run tracking."
+requires-python = ">=3.12"
+dependencies = [
+    "psycopg[binary]>=3.2",
+    "httpx>=0.27",
+    "parsel>=1.9",
+]
+
+[project.scripts]
+feedkit = "feedkit.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
